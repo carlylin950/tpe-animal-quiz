@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>動保人格鑑定所：你是哪種動保人？</title>
+  <style>
+    :root {
+      --primary: #1B365D;
+      --bg: #F4F6F9;
+      --card-bg: #FFFFFF;
+      --text: #333333;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .quiz-container {
+      background: var(--card-bg);
+      max-width: 500px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 24px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .quiz-img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      display: block;
+      object-fit: cover;
+    }
+    h1 {
+      color: var(--primary);
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .btn-start {
+      display: block;
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 0;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .btn-start:hover {
+      background: #122442;
+    }
+    
+    /* 測驗與結果頁切換控制 */
+    #quiz-box, #result-box {
+      display: none;
+    }
+    
+    .question {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .scenario {
+      font-size: 14px;
+      color: #555;
+      background: #EBF1F6;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .options button {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1.5px solid #D1D5DB;
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      text-align: left;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      line-height: 1.4;
+    }
+    .options button:hover, .options button:active {
+      border-color: var(--primary);
+      background: #F0F4F8;
+    }
+    .progress {
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 16px;
+    }
+    
+    /* 結果頁樣式 */
+    .result-card {
+      text-align: center;
+    }
+    .result-badge {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    .result-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+    .result-box {
+      text-align: left;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .btn-fb {
+      display: block;
+      width: 100%;
+      background: #1877F2;
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      padding: 14px 0;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(24, 119, 242, 0.3);
+    }
+    .notice {
+      font-size: 12px;
+      color: #E63946;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  
+  <!-- 0. 測驗封面頁 -->
+  <div id="start-box">
+    <img id="cover-img" class="quiz-img" src="https://lh3.googleusercontent.com/d/1artkrQcr90a2APYz4dCyGa9tmRuq8IRr" alt="動保人格鑑定所封面">
+    <h1>🐾 動保人格鑑定所</h1>
+    <div class="subtitle">你是哪種動保人？1 分鐘快速測驗</div>
+    <button class="btn-start" onclick="startQuiz()">開啟鑑定測驗 ➔</button>
+  </div>
+
+  <!-- 1. 題目區塊 -->
+  <div id="quiz-box">
+    <h1>🐾 動保人格鑑定所</h1>
+    <div class="progress" id="progress">第 1 / 5 題</div>
+    <div class="question" id="q-title"></div>
+    <div class="scenario" id="q-scenario"></div>
+    <div class="options" id="q-options"></div>
+  </div>
+
+  <!-- 2. 結果區塊 -->
+  <div id="result-box" class="result-card">
+    <div class="result-badge">測驗結果出爐</div>
+    
+    <!-- 結果卡牌圖片 -->
+    <img id="r-img" class="quiz-img" src="" alt="測驗結果卡牌">
+    
+    <div class="result-title" id="r-title"></div>
+    
+    <div class="result-box">
+      <p><strong>✨ 卡牌稱號：</strong><span id="r-sub"></span></p>
+      <p><strong>💡 特質解析：</strong><span id="r-desc"></span></p>
+      <p><strong>⚡ 動保超能力：</strong><span id="r-power"></span></p>
+      <p><strong>🗺️ 幸福指南：</strong><span id="r-guide"></span></p>
+    </div>
+
+    <div class="notice">📸 請立即【螢幕截圖】保存此頁面！</div>
+    <br>
+    <a href="https://www.facebook.com" target="_blank" class="btn-fb">👉 點此回到 FB 貼文留言抽獎</a>
+  </div>
+
+</div>
+
+<script>
+  // 已轉換為 Google Drive 圖片直連 URL
+  const imgUrls = {
+    cover: "https://lh3.googleusercontent.com/d/1artkrQcr90a2APYz4dCyGa9tmRuq8IRr",
+    A: "https://lh3.googleusercontent.com/d/13FB8k9yl9gwOuZanCLYkLi7p6L3D2GX_",
+    B: "https://lh3.googleusercontent.com/d/1TwxLY8fbEamaQJywIRoT9HgoTdPjIHGq",
+    C: "https://lh3.googleusercontent.com/d/1fbUjzgRa6IXG9oleN8PXhG70GmnLZtAq",
+    D: "https://lh3.googleusercontent.com/d/1FplAuu704VL7j_FhEk6CnahTK2UUwyQU"
+  };
+
+  // 題目資料
+  const questions = [
+    {
+      title: "【第 1 題】遇見浪浪的視角",
+      scenario: "風和日麗的週末午後，你在臺北市的巷弄散步，發現一隻耳角剪去一小塊（TCCP 標記）的貓咪正蜷縮在冷氣室外機上曬太陽。這時你的第一反應是？",
+      options: [
+        { text: "(A) 保持優雅安全距離，拿出手機拍下這張可愛的街景照", type: "A" },
+        { text: "(B) 眼神發亮！輕聲呼喚牠，並觀察周邊有沒有志工放置的乾淨水碗", type: "B" },
+        { text: "(C) 心頭一暖，靜靜站在一旁陪牠曬太陽，享受這份社區共存的和諧氛圍", type: "C" },
+        { text: "(D) 立刻發動動保雷達，回想這附近有沒有寵物友善店家，想分享給朋友", type: "D" }
+      ]
+    },
+    {
+      title: "【第 2 題】週末放鬆的模式",
+      scenario: "終於到了期待已久的週末，你想帶毛孩（或約朋友）進行一場「充電之旅」，你最嚮往的行程是？",
+      options: [
+        { text: "(A) 帶著望遠鏡去北市野生動物觀察區，靜靜賞鳥、呼吸新鮮空氣", type: "A" },
+        { text: "(B) 解鎖新體驗！搭乘「寵物友善公車」直達狗運動公園，看牠大甩尾巴奔跑", type: "B" },
+        { text: "(C) 預約最熱門的「寵物友善餐廳」，點份毛孩專屬餐點一起享受下午茶", type: "C" },
+        { text: "(D) 參加臺北市立動物園或動保處舉辦的生態講座，補充滿滿知識", type: "D" }
+      ]
+    },
+    {
+      title: "【第 3 題】野生動物的偶遇",
+      scenario: "去陽明山踏青時，路邊突然後探出一隻穿山甲（或松鼠）正在覓食！這時你會怎麼做？",
+      options: [
+        { text: "(A) 開啟「不干擾、不接觸、不餵食」的防護罩，遠遠觀賞不打擾牠", type: "A" },
+        { text: "(B) 趕緊拉住旁邊準備上前拍照的朋友，溫柔宣導「保持距離才是對牠好」", type: "B" },
+        { text: "(C) 默默記錄下地點，確認牠狀態健康、沒有受傷或受困後再放心離開", type: "C" },
+        { text: "(D) 拍下側影（不開閃光燈），回家搜尋野生動物保育資料，多了解牠一點", type: "D" }
+      ]
+    },
+    {
+      title: "【第 4 題】面對毛孩情緒的小劇場",
+      scenario: "在動物之家遇到一隻比較敏感、害羞（高敏特質）的狗狗正在等家，牠縮在角落不敢上前，你會？",
+      options: [
+        { text: "(A) 蹲下身子不直視牠，用輕柔的聲音說話，給牠足夠的安全感與時間", type: "A" },
+        { text: "(B) 回家上網報名「犬貓小學堂」講座，想先把自己裝備成懂牠的專業家長", type: "B" },
+        { text: "(C) 向現場志工詢問牠的習性與照護需求，思考家裡環境是否適合牠", type: "C" },
+        { text: "(D) 幫牠拍下最自然可愛的照片，分享到社群平台，幫牠尋找最合適的家", type: "D" }
+      ]
+    },
+    {
+      title: "【第 5 題】守護愛的儀式感",
+      scenario: "一年一度的動保教育月到了，你覺得哪一種行動最能代表你的「守護宣言」？",
+      options: [
+        { text: "(A) 隨身攜帶拾便袋，帶毛孩出門維持環境整潔，做個人人誇讚的優良飼主", type: "A" },
+        { text: "(B) 定期帶家中毛孩去打狂犬病疫苗，換上當年度閃亮吊牌（保護牠也保護全城）", type: "B" },
+        { text: "(C) 堅持「以領養代替購買」，並在決定認養前做好功課、陪伴一生", type: "C" },
+        { text: "(D) 熱情分享動保科普貼文，把正確的動保觀念傳播給身邊每一個人", type: "D" }
+      ]
+    }
+  ];
+
+  // 4 種結果說明
+  const results = {
+    A: {
+      title: "【理智觀察派】（代表動物：靜謐山鷹）",
+      sub: "冷靜理智的守護防線・邊界感的最高守護者",
+      desc: "你擁有極高的洞察力與尊重生命的修養！你非常清楚「愛牠，就是不打擾牠」。不論是面對街貓還是野生動物，你總是能維持最適當的安全距離，不盲目餵食也不過度打擾，是城市中最讓人安心的存在。",
+      power: "保持距離尊重野性 ｜ 遵守公德優良飼主",
+      guide: "前往野生動物觀察區或踏青時，別忘了將「不干擾、不接觸」的觀念傳遞給身邊朋友喔！"
+    },
+    B: {
+      title: "【熱血行動派】（代表動物：活力柴犬）",
+      sub: "元氣滿滿的行動特派員・友善城市的衝鋒隊",
+      desc: "你充滿熱情與正義感，看到動物有需要總是第一個挺身而出！你喜歡探索臺北各個角落，帶毛孩體驗寵物友善公車、跑遍各大狗運動公園。對你來說，動保不是口號，而是每天踏踏實實的生活體驗。",
+      power: "超強執行力，疫苗絕不缺席 ｜ 城市探索王，友善設施體驗官",
+      guide: "每年 9 月別忘了帶家中毛孩施打狂犬病疫苗並換上當年度閃亮吊牌！"
+    },
+    C: {
+      title: "【溫柔守護者】（代表動物：療癒橘貓）",
+      sub: "細膩暖心的陪伴專家・浪浪的溫柔港灣",
+      desc: "你的同理心極強，擁有撫平焦慮的溫暖氣場。面對害害或高敏特質的毛孩，你總有無限的耐心陪伴牠們適應環境。你非常支持「以領養代替購買」，並且懂得尊重每一個生命獨特的性格。",
+      power: "無限耐心，高敏毛孩解藥 ｜ 默默關懷，支持 TCCP 街貓照護",
+      guide: "如果打算認養毛孩，可以先參加「犬貓小學堂」講座，學習更多行為學與照護知識！"
+    },
+    D: {
+      title: "【暖心應援團】（代表動物：台灣藍鵲）",
+      sub: "聲量滿滿的動保播報員・友善理念的傳播者",
+      desc: "你是社群中最具影響力的動保號角！你樂於分享正確的動保知識、幫認養卡牌轉發貼文，或是把寵物友善店家介紹給身邊的朋友。因為有你的發聲，讓臺北市的動保訊息能夠傳遞到每一個角落！",
+      power: "訊息雷達，讓政策被看見 ｜ 揪團大師，帶動關注動物福利",
+      guide: "完成測驗後，快把結果分享到 FB/IG 並 Tag 好友，一起成為「全城連線」的最強應援團！"
+    }
+  };
+
+  let currentStep = 0;
+  let scores = { A: 0, B: 0, C: 0, D: 0 };
+
+  // 點擊「開啟鑑定測驗」後切換畫面
+  function startQuiz() {
+    document.getElementById("start-box").style.display = "none";
+    document.getElementById("quiz-box").style.display = "block";
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const q = questions[currentStep];
+    document.getElementById("progress").innerText = `第 ${currentStep + 1} / 5 題`;
+    document.getElementById("q-title").innerText = q.title;
+    document.getElementById("q-scenario").innerText = q.scenario;
+    
+    const optionsBox = document.getElementById("q-options");
+    optionsBox.innerHTML = "";
+    
+    q.options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.innerText = opt.text;
+      btn.onclick = () => selectOption(opt.type);
+      optionsBox.appendChild(btn);
+    });
+  }
+
+  function selectOption(type) {
+    scores[type]++;
+    currentStep++;
+    
+    if (currentStep < questions.length) {
+      renderQuestion();
+    } else {
+      showResult();
+    }
+  }
+
+  function showResult() {
+    document.getElementById("quiz-box").style.display = "none";
+    document.getElementById("result-box").style.display = "block";
+    
+    // 計算選擇最多的類型
+    let winner = "A";
+    let maxCount = 0;
+    for (let type in scores) {
+      if (scores[type] > maxCount) {
+        maxCount = scores[type];
+        winner = type;
+      }
+    }
+    
+    const res = results[winner];
+    // 自動帶入對應派別的卡牌圖片與文字
+    document.getElementById("r-img").src = imgUrls[winner];
+    document.getElementById("r-title").innerText = res.title;
+    document.getElementById("r-sub").innerText = res.sub;
+    document.getElementById("r-desc").innerText = res.desc;
+    document.getElementById("r-power").innerText = res.power;
+    document.getElementById("r-guide").innerText = res.guide;
+  }
+</script>
+
+</body>
+</html>
