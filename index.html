@@ -169,7 +169,8 @@
   
   <!-- 0. 測驗封面頁 -->
   <div id="start-box">
-    <img id="cover-img" class="quiz-img" src="https://drive.google.com/file/d/1Yj1GZeR5v_OZMsjehSGi2FtYOAnrGFIb/view?usp=sharing" alt="動保屬性鑑定所封面">
+    <!-- 已將 src 改為直連圖片網址 -->
+    <img id="cover-img" class="quiz-img" src="https://lh3.googleusercontent.com/d/1Yj1GZeR5v_OZMsjehSGi2FtYOAnrGFIb" alt="動保屬性鑑定所封面">
     <h1>🐾 動保屬性鑑定所</h1>
     <div class="subtitle">看看你是哪一派？1 分鐘快速測驗</div>
     <button class="btn-start" onclick="startQuiz()">開啟鑑定測驗 ➔</button>
@@ -208,9 +209,9 @@
 </div>
 
 <script>
-  // 已轉換為 Google Drive 圖片直連 URL
+  // 已更新 cover 網址為新的直連圖片 URL
   const imgUrls = {
-    cover: "https://lh3.googleusercontent.com/d/1artkrQcr90a2APYz4dCyGa9tmRuq8IRr",
+    cover: "https://lh3.googleusercontent.com/d/1Yj1GZeR5v_OZMsjehSGi2FtYOAnrGFIb",
     A: "https://lh3.googleusercontent.com/d/13FB8k9yl9gwOuZanCLYkLi7p6L3D2GX_",
     B: "https://lh3.googleusercontent.com/d/1TwxLY8fbEamaQJywIRoT9HgoTdPjIHGq",
     C: "https://lh3.googleusercontent.com/d/1fbUjzgRa6IXG9oleN8PXhG70GmnLZtAq",
@@ -365,6 +366,9 @@
     document.getElementById("r-guide").innerText = res.guide;
   }
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
