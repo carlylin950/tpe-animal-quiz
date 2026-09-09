@@ -169,8 +169,8 @@
   
   <!-- 0. 測驗封面頁 -->
   <div id="start-box">
-    <!-- 使用 uc?export=view 直連格式 -->
-    <img id="cover-img" class="quiz-img" src="https://drive.google.com/uc?export=view&id=19TdQhOhZqYLDsPz4XpdBwhbNC-wb82A8" alt="動保屬性鑑定所封面">
+    <!-- 使用 Google Drive LH3 靜態直連 CDN 格式 -->
+    <img id="cover-img" class="quiz-img" src="https://lh3.googleusercontent.com/d/19TdQhOhZqYLDsPz4XpdBwhbNC-wb82A8" alt="動保屬性鑑定所封面">
     <h1>🐾 動保屬性鑑定所</h1>
     <div class="subtitle">看看你是哪一派？1 分鐘快速測驗</div>
     <button class="btn-start" onclick="startQuiz()">開啟鑑定測驗 ➔</button>
@@ -209,12 +209,13 @@
 </div>
 
 <script>
+  // 全部統一改用 lh3.googleusercontent.com 直連格式
   const imgUrls = {
-    cover: "https://drive.google.com/uc?export=view&id=19TdQhOhZqYLDsPz4XpdBwhbNC-wb82A8",
-    A: "https://drive.google.com/uc?export=view&id=13FB8k9yl9gwOuZanCLYkLi7p6L3D2GX_",
-    B: "https://drive.google.com/uc?export=view&id=1TwxLY8fbEamaQJywIRoT9HgoTdPjIHGq",
-    C: "https://drive.google.com/uc?export=view&id=1fbUjzgRa6IXG9oleN8PXhG70GmnLZtAq",
-    D: "https://drive.google.com/uc?export=view&id=1FplAuu704VL7j_FhEk6CnahTK2UUwyQU"
+    cover: "https://lh3.googleusercontent.com/d/19TdQhOhZqYLDsPz4XpdBwhbNC-wb82A8",
+    A: "https://lh3.googleusercontent.com/d/13FB8k9yl9gwOuZanCLYkLi7p6L3D2GX_",
+    B: "https://lh3.googleusercontent.com/d/1TwxLY8fbEamaQJywIRoT9HgoTdPjIHGq",
+    C: "https://lh3.googleusercontent.com/d/1fbUjzgRa6IXG9oleN8PXhG70GmnLZtAq",
+    D: "https://lh3.googleusercontent.com/d/1FplAuu704VL7j_FhEk6CnahTK2UUwyQU"
   };
 
   // 題目資料
